@@ -36,18 +36,30 @@ const Hotel = () => {
         setOpen(true)
     }
     
+    const handleMove = (direction)=> {
+        let newSlideNumber
+
+        if(direction === "l") {
+            newSlideNumber = slideNumber === 0 ? (photos.length - 1) : slideNumber - 1
+        } else {
+            newSlideNumber = slideNumber === (photos.length - 1) ? 0 : slideNumber + 1
+        }
+
+        setSlideNumber(newSlideNumber)
+    }
+
     return (
         <div>
             <Navbar/>
             <Header type="list"/>
             <div className="hotelContainer">
                 { open && <div className="slider">
-                    <FontAwesomeIcon icon={faCircleXmark}/>
-                    <FontAwesomeIcon icon={faCircleArrowLeft}/>
+                    <FontAwesomeIcon icon={faCircleXmark} className="close" onClick={ ()=> setOpen(false) }/>
+                    <FontAwesomeIcon icon={faCircleArrowLeft} className="arrow" onClick={ ()=> handleMove("l") }/>
                     <div className="sliderWrapper">
                         <img src={photos[slideNumber].src} alt="" className="sliderImage" />
                     </div>
-                    <FontAwesomeIcon icon={faCircleArrowRight}/>
+                    <FontAwesomeIcon icon={faCircleArrowRight} className="arrow" onClick={ ()=> handleMove("r") }/>
                 </div> }
                 <div className="hotelWrapper">
                     <button className="bookNow">Reserve or Book Now!</button>
